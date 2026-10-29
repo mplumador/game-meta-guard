@@ -1,6 +1,8 @@
 Tapping the Meta (Windows) key opens the application launcher as usual — except while a game is focused, where it does nothing. No more accidentally popping the launcher mid-match. Alt+Tab, Meta+<key> combos and all other global shortcuts keep working.
 
-Games are detected by window class: anything starting with steam_app_ (Steam/Proton) plus gamescope. Use the script's settings (gear icon) to add more window classes, or to treat any fullscreen window as a game (with browsers and video players excluded by default).
+WHY: the usual fixes are to disable the Meta key entirely (losing the launcher everywhere) or to give the game a window rule that ignores global shortcuts (losing Alt+Tab, media keys, screenshots and every other shortcut while it's focused). This blocks only the bare Meta tap, and only while a game is focused.
+
+Games are detected by window class: anything starting with steam_app_ (Steam, and Heroic/Lutris games run through Proton) plus gamescope. Use the script's settings (gear icon) to add more window classes, or to treat any fullscreen window as a game (with browsers and video players excluded by default).
 
 SETUP (required — Plasma won't hand the Meta key to a script automatically):
 1. Enable the script here and click Apply.
@@ -9,4 +11,6 @@ SETUP (required — Plasma won't hand the Meta key to a script automatically):
 
 UNINSTALL: first clear the Game Meta Guard shortcut and add Meta back to Activate Application Launcher, otherwise tapping Meta will do nothing.
 
-Arch users: the AUR package kwin-scripts-game-meta-guard includes a game-meta-guard-setup command that does the rebinding for you.
+Arch users: the Arch package on GitHub includes a game-meta-guard-setup command that does the rebinding for you.
+
+Source, issues and Arch package: https://github.com/mplumador/game-meta-guard
