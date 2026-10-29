@@ -1,0 +1,89 @@
+#!/bin/bash
+# Moves the bare Meta tap from Plasma's launcher shortcut to Game Meta Guard (enable),
+# or puts it back (disable). Run as your normal user inside a Plasma session.
+set -euo pipefail
+
+PLUGIN=game-meta-guard
+KEY_META=$((0x01000022)) # Qt::Key_Meta
+KGA=(org.kde.kglobalaccel /kglobalaccel org.kde.KGlobalAccel)
+LAUNCHER=(plasmashell "activate application launcher" Plasma "Activate Application Launcher")
+GUARD=(kwin "Game Meta Guard" KWin "Game Meta Guard: launcher unless a game is focused")
+
+# Print one "a b c d" line per key sequence bound to the action.
+key_lines() {
+    busctl --user call "${KGA[@]}" shortcutKeys as 4 "$@" | {
+        read -r _ n rest
+        set -- $rest
+        for ((i = 0; i < n; i++)); do echo "$2 $3 $4 $5"; shift 5; done
+    }
+}
+
+# Read "a b c d" lines on stdin and print busctl a(ai) arguments.
+keys_args() {
+    local lines=() l
+    while read -r l; do [[ -n $l ]] && lines+=("$l"); done
+    printf '%s' "${#lines[@]}"
+    for l in "${lines[@]}"; do printf ' 4 %s' "$l"; done
+}
+
+set_keys() {
+    local id=("${@:1:4}")
+    shift 4
+    busctl --user call "${KGA[@]}" setForeignShortcutKeys 'asa(ai)' 4 "${id[@]}" "$@"
+}
+
+reconfigure() {
+    busctl --user call org.kde.KWin /KWin org.kde.KWin reconfigure
+}
+
+script_loaded() {
+    [[ $(busctl --user call org.kde.KWin /Scripting org.kde.kwin.Scripting isScriptLoaded s "$PLUGIN") == "b true" ]]
+}
+
+describe() {
+    local l out=()
+    while read -r l; do
+        [[ $l == "$KEY_META 0 0 0" ]] && out+=("Meta") || out+=("<$l>")
+    done < <(key_lines "$@")
+    echo "${out[*]:-none}"
+}
+
+cmd_enable() {
+    kwriteconfig6 --file kwinrc --group Plugins --key "${PLUGIN}Enabled" true
+    # Older KWin versions handle modifier-only taps here; keep it from opening the launcher too.
+    kwriteconfig6 --file kwinrc --group ModifierOnlyShortcuts --key Meta ""
+    reconfigure
+    for _ in {1..20}; do script_loaded && break; sleep 0.25; done
+    script_loaded || { echo "error: KWin did not load $PLUGIN; is it installed?" >&2; exit 1; }
+
+    set_keys "${LAUNCHER[@]}" $(key_lines "${LAUNCHER[@]}" | grep -vx "$KEY_META 0 0 0" | keys_args)
+    set_keys "${GUARD[@]}" 1 4 "$KEY_META" 0 0 0
+    echo "Enabled. Tapping Meta now goes through Game Meta Guard."
+}
+
+cmd_disable() {
+    if script_loaded; then set_keys "${GUARD[@]}" 0; fi
+    if ! key_lines "${LAUNCHER[@]}" | grep -qx "$KEY_META 0 0 0"; then
+        set_keys "${LAUNCHER[@]}" $({ echo "$KEY_META 0 0 0"; key_lines "${LAUNCHER[@]}"; } | keys_args)
+    fi
+    kwriteconfig6 --file kwinrc --group ModifierOnlyShortcuts --key Meta --delete
+    kwriteconfig6 --file kwinrc --group Plugins --key "${PLUGIN}Enabled" false
+    reconfigure
+    echo "Disabled. Tapping Meta opens the launcher directly again."
+}
+
+cmd_status() {
+    echo "script loaded:   $(script_loaded && echo yes || echo no)"
+    echo "launcher keys:   $(describe "${LAUNCHER[@]}")"
+    if script_loaded; then echo "guard keys:      $(describe "${GUARD[@]}")"; fi
+}
+
+case "${1:-}" in
+    enable) cmd_enable ;;
+    disable) cmd_disable ;;
+    status) cmd_status ;;
+    *)
+        echo "usage: $(basename "$0") enable|disable|status" >&2
+        exit 2
+        ;;
+esac

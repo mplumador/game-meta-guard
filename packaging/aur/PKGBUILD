@@ -1,0 +1,18 @@
+# Maintainer: Matthew Plumador <game-meta-guard at plumprogramming dot com>
+pkgname=kwin-scripts-game-meta-guard
+_name=game-meta-guard
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="KWin script: tapping Meta opens the launcher, except while a game is focused"
+arch=('any')
+url="https://github.com/mplumador/game-meta-guard"
+license=('MIT')
+depends=('kwin' 'plasma-workspace' 'kconfig' 'systemd')
+install=$pkgname.install
+source=("$_name-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    cd "$_name-$pkgver"
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}

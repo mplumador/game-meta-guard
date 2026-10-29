@@ -1,0 +1,21 @@
+{
+    "KPlugin": {
+        "Id": "game-meta-guard",
+        "Name": "Game Meta Guard",
+        "Description": "Tapping Meta opens the application launcher, except while a game is focused",
+        "Version": "1.1.0",
+        "License": "MIT",
+        "Authors": [
+            {
+                "Name": "Matthew Plumador",
+                "Email": "game-meta-guard@plumprogramming.com"
+            }
+        ],
+        "Website": "https://github.com/mplumador/game-meta-guard",
+        "EnabledByDefault": false
+    },
+    "X-KDE-ConfigModule": "kwin/effects/configs/kcm_kwin4_genericscripted",
+    "X-Plasma-API": "javascript",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPackageStructure": "KWin/Script"
+}

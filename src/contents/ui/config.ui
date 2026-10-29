@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameMetaGuardConfigForm</class>
+ <widget class="QWidget" name="GameMetaGuardConfigForm">
+  <property name="windowTitle">
+   <string>Game Meta Guard</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="introLabel">
+     <property name="text">
+      <string>Tapping Meta does nothing while a game is focused. Steam/Proton games (window class steam_app_*) are always treated as games. Lists are comma separated window classes; end an entry with * to match a prefix.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="extraLabel">
+     <property name="text">
+      <string>Also treat as games:</string>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_ExtraGameClasses</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="kcfg_ExtraGameClasses">
+     <property name="placeholderText">
+      <string>e.g. gamescope, factorio, minecraft*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QCheckBox" name="kcfg_FullscreenIsGame">
+     <property name="text">
+      <string>Treat any fullscreen window as a game</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="excludeLabel">
+     <property name="text">
+      <string>Except these:</string>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_FullscreenExclude</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="kcfg_FullscreenExclude">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Browsers, video players, ...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="hintLabel">
+     <property name="text">
+      <string>Find a window's class with: qdbus6 org.kde.KWin /KWin queryWindowInfo (then click the window) and use its resourceClass.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_FullscreenIsGame</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_FullscreenExclude</receiver>
+   <slot>setEnabled(bool)</slot>
+  </connection>
+ </connections>
+</ui>

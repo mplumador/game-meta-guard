@@ -1,0 +1,14 @@
+post_install() {
+    echo ">>> To activate Game Meta Guard, run as your normal user (inside Plasma):"
+    echo ">>>     game-meta-guard-setup enable"
+}
+
+pre_remove() {
+    echo ">>> If you haven't already, run 'game-meta-guard-setup disable' as your user"
+    echo ">>> BEFORE removing, or tapping Meta will do nothing afterwards."
+}
+
+post_remove() {
+    echo ">>> If Meta no longer opens the launcher: System Settings > Keyboard > Shortcuts >"
+    echo ">>> Plasma > Activate Application Launcher, add Meta back."
+}

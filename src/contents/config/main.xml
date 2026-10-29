@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+  <!-- Keep defaults in sync with DEFAULT_* in contents/code/main.js -->
+  <group name="">
+    <entry name="ExtraGameClasses" type="string">
+      <default>gamescope</default>
+    </entry>
+    <entry name="FullscreenIsGame" type="bool">
+      <default>false</default>
+    </entry>
+    <entry name="FullscreenExclude" type="string">
+      <default>firefox, librewolf, google-chrome, chromium, brave-browser, vivaldi-stable, microsoft-edge, mpv, vlc, org.kde.haruna, smplayer, io.github.celluloid_player.celluloid, org.gnome.totem, kodi, freetube, org.kde.okular, libreoffice*</default>
+    </entry>
+  </group>
+</kcfg>
