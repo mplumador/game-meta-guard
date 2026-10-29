@@ -5,6 +5,23 @@ while gaming: tapping Meta opens the application launcher as usual, **except whi
 is focused**, where it does nothing. Alt+Tab, Meta+<key> combos and every other global shortcut
 keep working.
 
+## Why
+
+Brushing the Meta key mid-game pops the application launcher over the game, steals focus and
+often minimizes or drops a fullscreen game out of fullscreen. The usual fixes trade one problem for
+another:
+
+- **Disable the Meta key entirely.** No more accidental launchers, but also no launcher on a Meta
+  tap anywhere else on the desktop, which is the whole point of the key.
+- **Set *Ignore global shortcuts* on the game with a KWin window rule.** Meta stops opening the
+  launcher, but so does everything else: Alt+Tab, volume and media keys, screenshot shortcuts and
+  every other global binding stop working while the game is focused.
+
+Game Meta Guard only blocks the bare Meta tap, and only while a game is focused. Everything else
+behaves exactly as it does without it.
+
+## Which windows count as games
+
 A window counts as a game if:
 
 - its window class starts with `steam_app_` (always on; Proton sets this for Steam games, and for
