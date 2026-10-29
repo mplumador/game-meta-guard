@@ -42,12 +42,21 @@ only triggers *Activate Application Launcher* if that window is not a game.
 
 ## Install
 
-### AUR
+### Arch Linux
+
+An AUR package is coming once AUR account registration reopens. Until then, build the package
+from this repository:
 
 ```sh
-paru -S kwin-scripts-game-meta-guard   # or yay, or makepkg
+git clone https://github.com/mplumador/game-meta-guard.git
+cd game-meta-guard/packaging/aur
+makepkg -si
 game-meta-guard-setup enable
 ```
+
+Or download the pre-built `kwin-scripts-game-meta-guard-<version>-1-any.pkg.tar.zst` from
+[Releases](https://github.com/mplumador/game-meta-guard/releases) and install it with
+`sudo pacman -U <file>`.
 
 `game-meta-guard-setup` enables the script and moves the Meta binding for you.
 `game-meta-guard-setup status` shows the current bindings.
@@ -65,7 +74,7 @@ game-meta-guard-setup enable
 
 Put Meta back on the launcher **before** removing the script, or tapping Meta will do nothing.
 
-- AUR: run `game-meta-guard-setup disable`, then remove the package.
+- Arch package: run `game-meta-guard-setup disable`, then `sudo pacman -R kwin-scripts-game-meta-guard`.
 - KDE Store: clear the *Game Meta Guard* shortcut, add `Meta` back to *Activate Application
   Launcher*, then untick/remove the script.
 
