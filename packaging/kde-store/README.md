@@ -8,4 +8,5 @@
    kpackagetool6 --type KWin/Script -u dist/game-meta-guard-<version>.kwinscript   # upgrade
    ```
 4. Upload at <https://store.kde.org> → Add Product → category **KWin Scripts**.
-   Paste `store-description.md` into the description field.
+   Paste `store-description.md` into the description field and use `logo.png` as the logo
+   (regenerate with `rsvg-convert -w 256 -h 256 logo.svg -o logo.png` after editing `logo.svg`).
