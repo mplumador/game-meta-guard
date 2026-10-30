@@ -2,10 +2,10 @@ Tapping the Meta (Windows) key opens the application launcher as usual — excep
 
 WHY: the usual fixes are to disable the Meta key entirely (losing the launcher everywhere) or to give the game a window rule that ignores global shortcuts (losing Alt+Tab, media keys, screenshots and every other shortcut while it's focused). This blocks only the bare Meta tap, and only while a game is focused.
 
-Games are detected by window class: anything starting with steam_app_ (Steam, and Heroic/Lutris games run through Proton) plus gamescope. Use the script's settings (gear icon) to add more window classes, or to treat any fullscreen window as a game (with browsers and video players excluded by default).
+Games are detected by window class: anything starting with steam\_app\_ (Steam, and Heroic/Lutris games run through Proton) plus gamescope. Use the script's settings (gear icon) to add more window classes, or to treat any fullscreen window as a game (with browsers and video players excluded by default).
 
 SETUP (required — Plasma won't hand the Meta key to a script automatically):
-1. Enable the script here and click Apply.
+1. System Settings → Window Management → KWin Scripts: tick Game Meta Guard and click Apply.
 2. System Settings → Keyboard → Shortcuts → Plasma → Activate Application Launcher: remove Meta, keep Alt+F1. Apply.
 3. System Settings → Keyboard → Shortcuts → KWin → Game Meta Guard: set it to Meta. Apply.
 
